@@ -15,20 +15,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// Test connection route
-app.get('/test-connection', async (req, res) => {
-  try {
-    const response = await fetch('https://api.openai.com/v1/engines', {
-      headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` }
-    });
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error('Connection test error:', error);
-    res.status(500).json({ error: 'Connection test failed', details: error.message });
-  }
-});
-
 // Route to get recommendations (GET method)
 app.get('/get-recommendations', async (req, res) => {
   const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.query;
