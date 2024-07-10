@@ -69,7 +69,7 @@ function getRecommendations() {
     const passiveIncomeInterest = document.querySelector('input[name="passiveIncomeInterest"]:checked').value;
     const major = document.getElementById('major').value;
 
-    fetch('/api/get-recommendations', {
+    fetch('http://localhost:3000/get-recommendations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ function submitFeedback() {
     const rating = document.getElementById('feedbackRating').value;
     const comments = document.getElementById('feedbackComments').value;
 
-    fetch('/api/submit-feedback', {
+    fetch('http://localhost:3000/submit-feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
