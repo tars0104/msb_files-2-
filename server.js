@@ -5,7 +5,7 @@ const cors = require('cors');
 const{OpenAI} = require('openai');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 // Setup CORS
@@ -14,7 +14,7 @@ app.use(cors());
 
 
 const openai = new OpenAI({
-  apiKey: process.env.PORT // Replace with your OpenAI API key
+  apiKey: process.env.OPENAI_API_KEY// Replace with your OpenAI API key
 });
 
 app.post('/get-recommendations', async (req, res) => {
