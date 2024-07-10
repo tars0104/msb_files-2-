@@ -15,10 +15,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// Root route
-app.get('/', (req, res) => {
-  res.send('Welcome to the server!');
-});
+
 
 // Test connection route
 app.get('/test-connection', async (req, res) => {
@@ -42,7 +39,7 @@ app.get('/get-recommendations', async (req, res) => {
 
   if (!university || !studentLoan || !country || !major || !passiveIncomeInterest) {
     console.error('Missing required fields');
-    return res.status(400).json({ error: 'Missing required fields' });
+    return res.status(500).json({ error: 'Missing required fields' });
   }
 
   const messages = [
