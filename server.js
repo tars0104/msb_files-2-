@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fetch = require('node-fetch');
 const { OpenAI } = require('openai');
 
 const app = express();
@@ -35,9 +36,12 @@ app.get('/test-connection', async (req, res) => {
 
 // Route to get recommendations (GET method)
 app.get('/get-recommendations', async (req, res) => {
-  const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.body;
+  const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.query;
+
+  console.log('Received data:', { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest });
 
   if (!university || !studentLoan || !country || !major || !passiveIncomeInterest) {
+    console.error('Missing required fields');
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -59,20 +63,23 @@ app.get('/get-recommendations', async (req, res) => {
       max_tokens: 500
     });
 
-    if (response.choices[0].message && response.choices[0].message.content) {
+    console.log('OpenAI response:', response);
+
+    if (response.choices && response.choices[0] && response.choices[0].message && response.choices[0].message.content) {
       res.json({ recommendations: response.choices[0].message.content.trim() });
     } else {
+      console.error('No content found in the response:', response);
       res.status(500).json({ error: 'No content found in the response' });
     }
   } catch (error) {
-    console.error('Error:', error);  // Log the entire error object
+    console.error('Error getting recommendations:', error);
     res.status(500).json({ error: 'Failed to get recommendations', details: error.message });
   }
 });
 
-// Route to submit feedback (POST method)
+// Route to submit feedback (GET method for testing purposes)
 app.get('/submit-feedback', (req, res) => {
-  const { feedbackHelpful, comments } = req.body;
+  const { feedbackHelpful, comments } = req.query;
   console.log('Feedback received:', feedbackHelpful, comments);
   res.json({ message: 'Feedback submitted successfully' });
 });
