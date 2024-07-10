@@ -12,26 +12,19 @@
             const major = document.getElementById('major').value;
             const passiveIncomeInterest = document.getElementById('passiveIncomeInterest').checked;
 
-            try {
-                const response = await fetch('https://msb01-7a42ba9d8940.herokuapp.com/get-recommendations', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        university,
-                        studentLoan,
-                        country,
-                        federalGrantsInterest,
-                        major,
-                        passiveIncomeInterest
-                    })
-                });
+            const url = new URL('https://msb01-7a42ba9d8940.herokuapp.com/get-recommendations');
+            url.searchParams.append('university', university);
+            url.searchParams.append('studentLoan', studentLoan);
+            url.searchParams.append('country', country);
+            url.searchParams.append('federalGrantsInterest', federalGrantsInterest);
+            url.searchParams.append('major', major);
+            url.searchParams.append('passiveIncomeInterest', passiveIncomeInterest);
 
+            try {
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
-
                 const data = await response.json();
                 document.getElementById('recommendations').textContent = data.recommendations;
             } catch (error) {
@@ -44,22 +37,15 @@
             const feedbackHelpful = document.getElementById('feedbackHelpful').checked;
             const comments = document.getElementById('comments').value;
 
-            try {
-                const response = await fetch('https://msb01-7a42ba9d8940.herokuapp.com/submit-feedback', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        feedbackHelpful,
-                        comments
-                    })
-                });
+            const url = new URL('https://msb01-7a42ba9d8940.herokuapp.com/submit-feedback');
+            url.searchParams.append('feedbackHelpful', feedbackHelpful);
+            url.searchParams.append('comments', comments);
 
+            try {
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
-
                 const data = await response.json();
                 document.getElementById('feedbackMessage').textContent = data.message;
             } catch (error) {

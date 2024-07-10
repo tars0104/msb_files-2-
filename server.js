@@ -33,8 +33,8 @@ app.get('/test-connection', async (req, res) => {
   }
 });
 
-// Route to get recommendations (POST method)
-app.post('/get-recommendations', async (req, res) => {
+// Route to get recommendations (GET method)
+app.get('/get-recommendations', async (req, res) => {
   const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.body;
 
   if (!university || !studentLoan || !country || !major || !passiveIncomeInterest) {
@@ -71,7 +71,7 @@ app.post('/get-recommendations', async (req, res) => {
 });
 
 // Route to submit feedback (POST method)
-app.post('/submit-feedback', (req, res) => {
+app.get('/submit-feedback', (req, res) => {
   const { feedbackHelpful, comments } = req.body;
   console.log('Feedback received:', feedbackHelpful, comments);
   res.json({ message: 'Feedback submitted successfully' });
