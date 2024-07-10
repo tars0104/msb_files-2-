@@ -11,7 +11,10 @@ app.use(bodyParser.json());
 // Setup CORS
 app.use(cors());
 
-
+// Route to handle root URL
+app.get('/', (req, res) => {
+  res.send('Welcome to the server!');
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY// Replace with your OpenAI API key
