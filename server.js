@@ -15,8 +15,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-
-
 // Test connection route
 app.get('/test-connection', async (req, res) => {
   try {
