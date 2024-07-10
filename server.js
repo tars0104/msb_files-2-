@@ -14,7 +14,7 @@ app.use(cors());
 
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY // Replace with your OpenAI API key
+  apiKey: process.env.PORT // Replace with your OpenAI API key
 });
 
 app.post('/get-recommendations', async (req, res) => {
