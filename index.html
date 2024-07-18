@@ -70,7 +70,7 @@ function getRecommendations() {
     const major = document.getElementById('major').value;
 
     fetch('https://msb01-7a42ba9d8940.herokuapp.com/get-recommendations', {
-        method: 'GET',
+        method: 'POST',  // Change to POST
         headers: {
             'Content-Type': 'application/json'
         },
@@ -96,7 +96,7 @@ function submitFeedback() {
     const comments = document.getElementById('feedbackComments').value;
 
     fetch('https://msb01-7a42ba9d8940.herokuapp.com/submit-feedback', {
-        method: 'GET',
+        method: 'POST',  // Change to POST
         headers: {
             'Content-Type': 'application/json'
         },

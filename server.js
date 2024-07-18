@@ -15,9 +15,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// Route to get recommendations (GET method)
-app.get('/get-recommendations', async (req, res) => {
-  const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.query;
+// Route to get recommendations (POST method)
+app.post('/get-recommendations', async (req, res) => {
+  const { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest } = req.body;
 
   console.log('Received data:', { university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest });
 
@@ -58,13 +58,13 @@ app.get('/get-recommendations', async (req, res) => {
   }
 });
 
-// Route to submit feedback (GET method for testing purposes)
-app.get('/submit-feedback', (req, res) => {
-  const { feedbackHelpful, comments } = req.query;
-  console.log('Feedback received:', feedbackHelpful, comments);
+// Route to submit feedback (POST method)
+app.post('/submit-feedback', (req, res) => {
+  const { rating, comments } = req.body;
+  console.log('Feedback received:', rating, comments);
   res.json({ message: 'Feedback submitted successfully' });
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at https://msb01-7a42ba9d8940.herokuapp.com:${port}`);
 });
