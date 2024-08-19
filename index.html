@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="title-container">
 <h1>Million Scholar Baby</h1>
+</div>
 <form id="loanForm">
     <label for="university">University:</label>
     <input type="text" id="university" placeholder="University Name" required><br>
 
-    <label for="country">Country:</label>
+    <label for="country">Country You're From:</label>
     <input type="text" id="country" placeholder="Country" required><br>
 
     <label for="major">Major:</label>
@@ -59,7 +61,10 @@
 
 <div id="recommendations"></div>
 <div id="mentors"></div> <!-- Ensure this div is present to display mentors -->
+
+<div class="mentors-container">
 <h3>Feedback on Recommendations:</h3>
+</div>
 <form id="feedbackForm">
     <label>How helpful were the recommendations?</label>
     <select id="feedbackRating">
@@ -109,10 +114,11 @@ function getRecommendations() {
     .then(data => {
         document.getElementById('recommendations').textContent = data.recommendations;
         const mentorsDiv = document.getElementById('mentors');
-        mentorsDiv.innerHTML = '<h3>Connect with Mentors:</h3>';
+        mentorsDiv.innerHTML = '<div class="mentors-container"><h3>Connect with Mentors:</h3></div>';
         data.mentors.forEach(mentor => {
-            mentorsDiv.innerHTML += `<p>${mentor.name} - ${mentor.expertise} - <a href="mailto:${mentor.discordcontact}">${mentor.discordcontact}</a></p>`;
+            mentorsDiv.innerHTML += `<div class="mentors-container"><p>${mentor.name} - ${mentor.expertise} - <a href="mailto:${mentor.discordcontact}">${mentor.discordcontact}</a></p></div>`;
         });
+
     })
     .catch(error => {
         console.error('Error:', error);

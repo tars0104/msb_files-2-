@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
 const { OpenAI } = require('openai');
 
 const app = express();
@@ -9,6 +10,39 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
+
+// Set up the database and create a table if it doesn't exist
+const db = new sqlite3.Database('./emails.db', (err) => {
+    if (err) {
+        console.error('Error opening database:', err.message);
+    } else {
+        db.run(`CREATE TABLE IF NOT EXISTS emails (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT NOT NULL
+        )`, (err) => {
+            if (err) {
+                console.error('Error creating table:', err.message);
+            }
+        });
+    }
+});
+
+// Route to handle email submission (POST method)
+app.post('/submit-email', (req, res) => {
+    const email = req.body.email;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    db.run('INSERT INTO emails (email) VALUES (?)', [email], function(err) {
+        if (err) {
+            console.error('Error inserting email:', err.message);
+            return res.status(500).json({ error: 'Failed to store email' });
+        }
+        res.json({ message: 'Email stored successfully', id: this.lastID });
+    });
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
