@@ -11,6 +11,10 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
+
+
+
+
 // Set up the database and create a table if it doesn't exist
 const db = new sqlite3.Database('./emails.db', (err) => {
     if (err) {
