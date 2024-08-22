@@ -98,7 +98,7 @@ function getRecommendations() {
     const passiveIncomeInterest = document.querySelector('input[name="passiveIncomeInterest"]:checked').value;
     const incomeOptions = Array.from(document.querySelectorAll('input[name="incomeOption"]:checked')).map(option => option.value);
 
-    fetch('http://localhost:3000/get-recommendations', {
+    fetch('/get-recommendations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -130,7 +130,7 @@ function submitFeedback() {
     const rating = document.getElementById('feedbackRating').value;
     const comments = document.getElementById('feedbackComments').value;
 
-    fetch('http://localhost:3000/submit-feedback', {
+    fetch('/submit-feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

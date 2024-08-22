@@ -26,7 +26,7 @@
             event.preventDefault();
             const email = document.getElementById('email').value;
             if (email) {
-                fetch('http://localhost:3000/submit-email', {
+                fetch('/submit-email', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

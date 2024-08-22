@@ -1,19 +1,17 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const { OpenAI } = require('openai');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
-
-
-
-
+app.use(express.static(path.join(__dirname)));
 
 // Set up the database and create a table if it doesn't exist
 const db = new sqlite3.Database('./emails.db', (err) => {
@@ -31,6 +29,12 @@ const db = new sqlite3.Database('./emails.db', (err) => {
     }
 });
 
+// Serve login.html on the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html', 'index.html'));
+});
+
+
 // Route to handle email submission (POST method)
 app.post('/submit-email', (req, res) => {
     const email = req.body.email;
@@ -46,6 +50,11 @@ app.post('/submit-email', (req, res) => {
         }
         res.json({ message: 'Email stored successfully', id: this.lastID });
     });
+});
+
+// Serve index.html after successful login (e.g., via a redirect or by navigating to /index)
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const openai = new OpenAI({
